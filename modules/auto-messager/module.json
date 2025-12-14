@@ -1,26 +1,26 @@
-{
-  "name": "auto-messager",
-  "author": {
-    "scnxOrgID": "1",
-    "name": "SCDerox (SC Network Team)",
-    "link": "https://github.com/SCDerox"
-  },
-  "openSourceURL": "https://github.com/SCNetwork/CustomDCBot/tree/main/modules/auto-messager",
-  "events-dir": "/events",
-  "config-example-files": [
-    "hourly.json",
-    "daily.json",
-    "cronjob.json"
-  ],
-  "tags": [
-    "tools"
-  ],
-  "humanReadableName": {
-    "en": "Automatic Messages",
-    "de": "Automatische Nachrichten"
-  },
-  "description": {
-    "en": "You can - with this module - send automatic messages",
-    "de": "Dieses Modul erlaubt dir es dir, automatisch versenden zu lassen"
-  }
-}
+-- SCNX Auto-Messenger Script for Roblox Code
+-- Make sure this is in your main bot script
+
+-- List of keywords that trigger the reply
+local keywords = {"code", "cmds", "join"}  
+
+-- The automatic reply message
+local replyMessage = "🎮 Here is the in-game code: ssuxp9hh\n" ..
+                     "🚀 Join quickly: https://www.roblox.com/games/start?placeId=7711635737&launchData=joinCode%3Dssuxp9hh"
+
+-- Listen for messages
+bot:on("messageCreate", function(message)
+    -- Ignore messages from the bot itself
+    if message.author.bot then return end
+
+    -- Convert message to lowercase for easy comparison
+    local msgContent = message.content:lower()
+
+    -- Check if the message matches any keyword
+    for _, keyword in ipairs(keywords) do
+        if msgContent == keyword then
+            message:reply(replyMessage)
+            return -- Stop checking once a keyword is found
+        end
+    end
+end)
